@@ -1,5 +1,5 @@
 from django.test import TestCase, SimpleTestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 
 class HomePageTests(SimpleTestCase):
@@ -15,3 +15,12 @@ class HomePageTests(SimpleTestCase):
     def test_homepage_template(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
+
+    def test_homepage_contains_correct_html(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'Homepage')
+
+    def test_homepage_does_not_contain_incorrect_html(self):
+        response = self.client.get('/')
+        self.assertNotContains(response, 'I shoould not be here')
+        
