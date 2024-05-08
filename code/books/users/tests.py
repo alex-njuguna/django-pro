@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 
 class CustomUserTests(TestCase):
@@ -32,3 +33,15 @@ class CustomUserTests(TestCase):
         self.assertTrue(admin_user.is_active)
         self.assertTrue(admin_user.is_staff)
         self.assertTrue(admin_user.is_superuser)
+
+class RegisterPageTests(TestCase):
+
+    def setUp(self):
+        url = reverse('register')
+        self.response = self.client.get(url)
+
+    def test_register_template(self):
+        self.assertEqual(self.response.status_code, 200)
+        self.assertTemplateUsed(self.response, 'registration/register.html')
+        self.assertContains(self.response, 'Create an Account')
+        self.assertNotContains(self.response, 'i dont belong here')
