@@ -8,9 +8,17 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+            # data validation
+            email = form.cleaned_data.get('email')
+            username = email.split('@')[0]
             password = form.cleaned_data.get('password1')
+
+            # creating new user
+            user = form.save(commit=False)
+            user.username = username
+            user.save()
+
+            # authentication and logging in
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('home')
