@@ -3,7 +3,7 @@
 {% block content %}
     {% for book in books %}
         <div>
-            <h2><a href="#" class="text-decoration-none">{{book.title}}</a></h2>
+            <h2><a href="{% url 'book_detail' book.id %}" class="text-decoration-none">{{book.title}}</a></h2>
         </div>
     {% endfor %}
 {% endblock content %}

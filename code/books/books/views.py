@@ -8,5 +8,5 @@ def books_list(request):
     return render(request, 'books/books_list.html', {'books': books, 'title': 'books'})
 
 def book_detail(request, id):
-    book = Book.objects.get(id)
+    book = Book.objects.get(id=id)
     return render(request, 'books/book_detail.html', {'book': book, 'title': book.title})

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <h2>Title: <a href="#" class="text-decoration-none">{{book.title}}</a></h2>
+        <p>Author: {{book.author}}</P>
+        <p>Price: ${{book.price}}</P>
+    </div>
+{% endblock content %}
