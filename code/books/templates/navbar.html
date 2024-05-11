@@ -10,6 +10,9 @@
         <a class="navbar-brand" href="/">Bookstore</a>
         <ul class="navbar-nav ml-auto d-flex flex-row">
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'books_list' %}">Books</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
             {% if user.is_authenticated %}
