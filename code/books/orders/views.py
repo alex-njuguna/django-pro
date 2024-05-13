@@ -1,4 +1,5 @@
 from django.shortcuts import render
 
 def list_orders(request):
-    pass
+    
+    return render(request, 'orders/purchase.html', {'title':'Orders'})
