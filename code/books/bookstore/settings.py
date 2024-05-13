@@ -138,6 +138,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # django allauth conf
+LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
