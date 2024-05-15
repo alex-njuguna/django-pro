@@ -1,0 +1,20 @@
+{% extends 'base.xhtml' %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+    {% if sent %}
+        <h1 class="mb-2 alert alert-success">E-mail succesfully sent</h1>
+        <hr>
+        <p>
+            "{{ post.title }}" was successfully sent to <span class="btn btn-primary text-primary">{{ form.to }}</span> 
+        </p>
+    {% else %}
+        <h1 class="alert alert-info">Share "{{ post.title }}" by <span class="text-primary text-decoration-underline">{{ post.author }}</span> via e-mail?</h1>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Send e-mail" class="btn btn-primary mt-4">
+        </form>
+    {% endif %}
+{% endblock %}
