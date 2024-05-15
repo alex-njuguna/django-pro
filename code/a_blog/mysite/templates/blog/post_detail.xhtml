@@ -1,14 +1,16 @@
 {% extends 'base.xhtml' %}
 
 {% block content%}
-    <h1>{{ post.title }}</h1>
-    <p class="date">
+    <h1 class="text-danger mb-3 text-capitalize">{{ post.title }}</h1>
+    <hr>
+    <p class="text-primary fs-5">
         Published {{ post.publish }} by {{ post.author}}
     </p>
+    <hr>
     {{ post.body|linebreaks }}
     <p>
-        <a href="{% url 'blog:post_share' post.id %}">
-            Share this post
+        <a href="{% url 'blog:post_share' post.id %}" class="mt-4 text-decoration-none btn btn-info">
+            <i class="fa-solid fa-share fa-lg"></i>
         </a>
     </p>
 {% endblock %}

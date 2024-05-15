@@ -9,7 +9,7 @@
             "{{ post.title }}" was successfully sent to <span class="btn btn-primary text-primary">{{ form.to }}</span> 
         </p>
     {% else %}
-        <h1 class="alert alert-info">Share "{{ post.title }}" by <span class="text-primary text-decoration-underline">{{ post.author }}</span> via e-mail?</h1>
+        <h1 class="alert alert-info">Share "{{ post.title }}" by <span class="text-primary text-decoration-underline">@{{ post.author }}</span> via e-mail?</h1>
         <hr>
         <form method="post">
             {% csrf_token %}
