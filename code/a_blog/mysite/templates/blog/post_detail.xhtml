@@ -1,5 +1,7 @@
 {% extends 'base.xhtml' %}
 
+{% load crispy_forms_tags %}
+
 {% block content%}
     <h1 class="text-danger mb-3 text-capitalize">{{ post.title }}</h1>
     <hr>
@@ -13,4 +15,28 @@
             <i class="fa-solid fa-share fa-lg"></i>
         </a>
     </p>
+    {% with comments.count as total_comments %}
+        <h2 class="alert alert-info">
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <div class="mb-2 shadow p-2">
+            <p class="text-primary fs-5 border-bottom">
+                {{ comment.name }} on {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+        <hr class="text-danger fw-bold">
+    {% empty %}
+        <p class="alert alert-danger">No comments.</p>
+    {% endfor %}
+    
+    <h2>Add a Comment</h2>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Comment" class="btn btn-primary mt-3">
+    </form>
 {% endblock %}

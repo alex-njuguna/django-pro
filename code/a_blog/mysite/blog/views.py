@@ -1,9 +1,8 @@
 import os
 from dotenv import load_dotenv
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.core.mail import send_mail
-from django.views.decorators.http import require_POST
 
 from .models import Post, Comment
 from .forms import EmailPostForm, CommentForm
@@ -24,7 +23,20 @@ def post_detail(request, year, month, day, post):
      publish__year=year,
      publish__month=month,
      publish__day=day)
-    return render(request, 'blog/post_detail.xhtml', {'post':post})
+    comments = post.comments.filter(active=True)
+
+    # create a comment
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect(post.get_absolute_url())
+    else:
+        form = CommentForm()
+
+    return render(request, 'blog/post_detail.xhtml', {'post':post, 'comments': comments, 'form': form})
 
 def post_share(request, post_id):
     # retrieve post by id
@@ -44,17 +56,4 @@ def post_share(request, post_id):
         form = EmailPostForm()
     
     return render(request, 'blog/post_share.xhtml', {'form': form, 'post': post, 'sent': sent, 'title': 'share post'})
-
-@require_POST
-def post_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
-    comment = None
-    # a comment was posted
-    form = CommentForm(data=request.POST)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        # assign the post to the comment
-        comment.post = post
-        comment.save()
-
-    return render(request, 'blog/comment.xhtml', {'post': post, 'form': form, 'comment': comment})
+    
