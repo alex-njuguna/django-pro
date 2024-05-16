@@ -6,10 +6,10 @@
         <h2 class="alert alert-primary text-capitalize">Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
     {% for post in posts %}
-    <div class="border-top shadow-top p-2 m-2">
+    <div class="border-start shadow-sm p-3 my-5">
         
         <h2>
-            <a class="text-decoration-none text-capitalize" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <a class="text-decoration-none text-capitalize fw-bold" style="color: brown;" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         </h2>
         <p class="text-capitalize">
             Tags: 

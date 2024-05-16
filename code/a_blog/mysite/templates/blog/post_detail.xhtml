@@ -44,9 +44,12 @@
 
     <h2 class="my-4 fw-bold">Similar Posts</h2>
     {% for post in similar_posts %}
-        <h5 class="border-bottom shadow p-3">
-            <a href="{{ post.get_absolute_url }}" class="text-decoration-none"> {{ post.title }} </a>
+    <div class="border-bottom shadow-sm p-3">
+        <h5 >
+            <a href="{{ post.get_absolute_url }}" class="text-decoration-none" style="color: brown;"> {{ post.title }} </a>
         </h5>
+        <p>{{ post.body|truncatewords:10|linebreaks }}</p>
+    </div>
     {% empty %}
         <p class="alert alert-danger">There are no similar posts yet</p>
     {% endfor %}
