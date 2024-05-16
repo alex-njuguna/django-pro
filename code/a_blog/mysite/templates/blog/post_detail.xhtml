@@ -34,9 +34,20 @@
     {% endfor %}
     
     <h2>Add a Comment</h2>
-    <form method="post" class="mt-4">
+    <form method="post" class="mt-4 mb-4">
         {% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="Comment" class="btn btn-primary mt-3">
     </form>
+
+    <hr>
+
+    <h2 class="my-4 fw-bold">Similar Posts</h2>
+    {% for post in similar_posts %}
+        <h5 class="border-bottom shadow p-3">
+            <a href="{{ post.get_absolute_url }}" class="text-decoration-none"> {{ post.title }} </a>
+        </h5>
+    {% empty %}
+        <p class="alert alert-danger">There are no similar posts yet</p>
+    {% endfor %}
 {% endblock %}
