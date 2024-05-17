@@ -66,7 +66,7 @@ class Reaction(models.Model):
         LIKE = 'LK', 'Like'
         DISLIKE = 'DL', 'Dislike'
 
-    user = models.ForeingKey(User, on_delete=models.CASCADE, related_name='reactions')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reactions')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reactions')
     reaction = models.CharField(max_length=2, choices=ReactionType.choices)
 

@@ -10,11 +10,42 @@
     </p>
     <hr>
     {{ post.body|markdown }}
-    <p>
-        <a href="{% url 'blog:post_share' post.id %}" class="mt-4 text-decoration-none btn btn-info">
-            <i class="fa-solid fa-share fa-lg"></i>
-        </a>
-    </p>
+
+    <div class="container d-flex flex-row my-5">
+        <div class="container d-flex flex-column">
+            <p>
+                <a href="{% url 'blog:post_share' post.id %}" class="text-decoration-none btn btn-info">
+                    <i class="fa-solid fa-share fa-lg"></i>
+                </a>
+            </p>
+        </div>
+        <div class="container d-flex flex-column">
+            <form method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" name="reaction" value="LV" class="btn btn-outline-danger">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                <button type="submit" name="reaction" value="LK" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+                <button type="submit" name="reaction" value="DL" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-thumbs-down"></i>
+                </button>
+            </form>
+            <p style="margin-left: 6px;">   
+                <span class="text-danger" style="margin-right: 2rem; margin-left: 0.5rem;">
+                    {{ love_count }}
+                </span>
+                <span class="text-primary">
+                    {{ like_count }} 
+                </span>
+                <span class="text-secondary" style="margin-right: 2rem; margin-left: 2rem;">
+                    {{ dislike_count }}
+                </span>
+            </p>
+        </div>
+    </div>
+
     {% with comments.count as total_comments %}
         <h2 class="alert alert-info">
             {{ total_comments }} comment{{ total_comments|pluralize }}
