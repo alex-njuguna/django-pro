@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Reaction
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'author', 'publish', 'created', 'updated', 'status']
@@ -18,3 +18,11 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'email', 'body']
 
 admin.site.register(Comment, CommentAdmin)
+
+class ReactionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'post', 'reaction']
+    list_display_links = ['post']
+    list_filter = ['post']
+    search_fields = ['post']
+
+admin.site.register(Reaction, ReactionAdmin)
