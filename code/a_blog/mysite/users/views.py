@@ -13,7 +13,12 @@ def register_user(request):
     else:
         form = RegisterUserForm()
 
-    return render(request, 'users/register.xhtml', {'form': form})
+    context = {
+        'form': form,
+        'title': 'register',
+    }
+
+    return render(request, 'users/register.xhtml', context)
 
 
 
