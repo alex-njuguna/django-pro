@@ -3,12 +3,12 @@
 
 {% block content %}
     <div class="container d-flex flex-column align-items-center mt-5">
-        <h2 class="fst-italic my-5">Login</h2>
+        <h2 class="fst-italic my-5">Register</h2>
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <input type="submit" value="Login" class="btn btn-primary my-3">
+            <input type="submit" value="Register" class="btn btn-primary my-3">
         </form>
-        <p>Don't have an account? <small><a href="{% url 'users:register' %}" class="fst-italic text-decoration-none">register</a></small></p>
+        <p>Already have an account? <small><a href="{% url 'users:login'%}" class="fst-italic text-decoration-none">Login</a></small></p>
     </div>
 {% endblock %}

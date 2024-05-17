@@ -142,4 +142,5 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 # Authentication
 LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'blog:post_list'
 LOGOUT_REDIRECT_URL = 'blog:post_list'
