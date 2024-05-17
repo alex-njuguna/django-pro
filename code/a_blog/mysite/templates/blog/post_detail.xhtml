@@ -1,5 +1,5 @@
 {% extends 'base.xhtml' %}
-
+{% load blog_tags %}
 {% load crispy_forms_tags %}
 
 {% block content%}
@@ -9,7 +9,7 @@
         Published {{ post.publish }} by {{ post.author}}
     </p>
     <hr>
-    {{ post.body|linebreaks }}
+    {{ post.body|markdown }}
     <p>
         <a href="{% url 'blog:post_share' post.id %}" class="mt-4 text-decoration-none btn btn-info">
             <i class="fa-solid fa-share fa-lg"></i>

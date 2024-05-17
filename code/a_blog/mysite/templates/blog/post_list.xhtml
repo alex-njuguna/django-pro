@@ -1,5 +1,5 @@
 {% extends 'base.xhtml' %}
-
+{% load blog_tags %}
 {% block content %}
     <h1 class="mb-4 fw-bold">Alex<span class="text-danger">Blog</span></h1>
     {% if tag %}
@@ -23,7 +23,7 @@
         <p class="fs-6 fst-italic text-capitalize" style="color: gray;">
             Published {{ post.publish }} by {{ post.author }}
         </p>
-        {{ post.body|truncatewords:30|linebreaks }}
+        {{ post.body|markdown|truncatewords_html:30|linebreaks }}
     </div>
     
     {% endfor %}
