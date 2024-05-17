@@ -17,10 +17,10 @@
     {% endif %}
 </head>
 <body>
-    <div class="container-fluid d-flex flex-horizontal min-vh-100" style="width: 95%;">
-        <div class="row w-100" style="width: 80%;">
+    <div class="container-fluid d-flex flex-horizontal min-vh-100" style="width: 100%;">
+        <div class="row w-100" style="width: 65%;">
             <div class="col-md-10">
-                <div class="container d-flex flex-column p-4 text-left mr-4">
+                <div class="container-fluid d-flex flex-column p-4 text-left mr-4">
                     <div id="'content">
                         {% block content %}
                         {%  endblock %}
@@ -29,24 +29,24 @@
             </div>
         </div>
         
-        <div class="container" style="width: 20%; margin-top: 10%; padding-top: 40px;">
+        <div class="container" style="width: 35%; margin-top: 10%; padding-top: 20px;">
             <div class="row">
                 <div class="col-12 col-md-12 d-none d-sm-block">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="text-primary">SideBar</h6>
+                            <h5 class="text-primary text-center">SideBar</h5>
                         </div>
                         <div class="card-body" style="background: beige;">
-                            <p>This is my blog</p>
-                            <p>I have written a total of {% total_posts %} posts so far.</p>
-                            <h3>Latest Posts</h3>
+                            <!-- <p>{% total_posts %} posts</p> -->
+                            <h3 class="text-primary text-center">Latest</h3>
                             {% show_latest_posts %}
-                            <h3>Most commented posts</h3>
+                            <hr>
+                            <h3 class="text-primary text-center">Popular</h3>
                             {% get_most_commented_posts as most_commented_posts %}
-                            <ul>
+                            <ul class="list-group">
                                 {% for post in most_commented_posts %}
-                                <li>
-                                    <a href="{{ post.get_absolute_url }}">
+                                <li class="list-group-item">
+                                    <a class="text-decoration-none" style="color: brown;" href="{{ post.get_absolute_url }}">
                                         {{ post.title }}
                                     </a>
                                 </li>

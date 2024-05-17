@@ -1,7 +1,7 @@
-<ul>
+<ul class="list-group">
     {% for post in latest_posts %}
-        <li>
-            <a href="{{ post.get_absolute_url }}">
+        <li class="list-group-item">
+            <a class="text-decoration-none" style="color: brown;" href="{{ post.get_absolute_url }}">
                 {{ post.title}}
             </a>
         </li>
