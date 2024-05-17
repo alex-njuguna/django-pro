@@ -6,11 +6,11 @@
         <h2 class="alert alert-primary text-capitalize">Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
     {% for post in posts %}
-    <div class="border-start shadow-sm p-3 my-5">
+    <div class="border-start shadow-sm p-3 my-3">
         
-        <h2>
+        <h3>
             <a class="text-decoration-none text-capitalize fw-bold" style="color: brown;" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-        </h2>
+        </h3>
         <p class="text-capitalize">
             Tags: 
             {% for tag in post.tags.all %}

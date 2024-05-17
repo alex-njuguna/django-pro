@@ -29,7 +29,7 @@
             </div>
         </div>
         
-        <div class="container" style="width: 35%; margin-top: 10%; padding-top: 20px;">
+        <div class="container" style="width: 35%; margin-top: 10%; padding-top: 20px; overflow-y: auto;">
             <div class="row">
                 <div class="col-12 col-md-12 d-none d-sm-block">
                     <div class="card">
@@ -53,9 +53,9 @@
                                 {% endfor %}
                             </ul>
                             <hr>
-
+        
                             
-
+        
                             <h3 class="text-primary text-center p-2">Popular</h3>
                             {% get_most_reacted_posts 3 as most_reacted_posts %}
                             <ul class="list-group">
@@ -72,6 +72,7 @@
                 </div>
             </div> 
         </div>
+        
         
     </div>
     
