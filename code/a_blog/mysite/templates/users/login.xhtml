@@ -1,0 +1,14 @@
+{% extends 'base.xhtml' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container d-flex flex-column align-items-center mt-5">
+        <h2 class="fst-italic my-5">Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Login" class="btn btn-primary my-3">
+        </form>
+        <p cla>Don't have an account? <small><a href="" class="fst-italic text-decoration-none">register</a></small></p>
+    </div>
+{% endblock %}
