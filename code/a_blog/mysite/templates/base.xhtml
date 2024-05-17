@@ -41,10 +41,25 @@
                             <h3 class="text-primary text-center">Latest</h3>
                             {% show_latest_posts %}
                             <hr>
-                            <h3 class="text-primary text-center">Popular</h3>
-                            {% get_most_commented_posts as most_commented_posts %}
+                            <h3 class="text-primary text-center p-2">Trending</h3>
+                            {% get_most_commented_posts 3 as most_commented_posts %}
                             <ul class="list-group">
                                 {% for post in most_commented_posts %}
+                                <li class="list-group-item">
+                                    <a class="text-decoration-none" style="color: brown;" href="{{ post.get_absolute_url }}">
+                                        {{ post.title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <hr>
+
+                            
+
+                            <h3 class="text-primary text-center p-2">Popular</h3>
+                            {% get_most_reacted_posts 3 as most_reacted_posts %}
+                            <ul class="list-group">
+                                {% for post in most_reacted_posts %}
                                 <li class="list-group-item">
                                     <a class="text-decoration-none" style="color: brown;" href="{{ post.get_absolute_url }}">
                                         {{ post.title }}
