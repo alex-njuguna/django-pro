@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     # local
     'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
 ]
 
 SITE_ID = 1
