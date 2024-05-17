@@ -7,8 +7,9 @@ from taggit.models import Tag
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.auth.decorators import login_required
 
-from .models import Post, Comment
+from .models import Post, Comment, Reaction
 from .forms import EmailPostForm, CommentForm, SearchForm
 
 load_dotenv()
@@ -34,6 +35,7 @@ def post_list(request, tag_slug=None):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/post_list.xhtml', {'posts': posts, 'tag':tag})
 
+@login_required
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post,
      status=Post.Status.PUBLISHED,
@@ -54,12 +56,38 @@ def post_detail(request, year, month, day, post):
     else:
         form = CommentForm()
 
+    # Handle reactions
+    if request.method == 'POST' and 'reaction' in request.POST:
+        reaction_type = request.POST.get('reaction')
+        existing_reaction = Reaction.objects.filter(user=request.user, post=post).first()
+        if existing_reaction:
+            existing_reaction.reaction = reaction_type
+            existing_reaction.save()
+        else:
+            Reaction.objects.create(user=request.user, post=post, reaction=reaction_type)
+        return redirect(post.get_absolute_url())
+
+    # count reactions
+    love_count = post.reactions.filter(reaction=Reaction.ReactionType.LOVE).count()
+    like_count = post.reactions.filter(reaction=Reaction.ReactionType.LIKE).count()
+    dislike_count = post.reactions.filter(reaction=Reaction.ReactionType.DISLIKE).count()
+
     # list similar posts
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
     similar_posts = similar_posts.order_by('-publish').distinct()
 
-    return render(request, 'blog/post_detail.xhtml', {'post':post, 'comments': comments, 'form': form, 'similar_posts': similar_posts })
+    context = {
+        'post':post, 
+        'comments': comments, 
+        'form': form, 
+        'similar_posts': similar_posts,
+        'love_count': love_count,
+        'like_count': like_count,
+        'dislike_count': dislike_count, 
+        }
+
+    return render(request, 'blog/post_detail.xhtml', context)
 
 def post_share(request, post_id):
     # retrieve post by id
