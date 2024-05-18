@@ -75,6 +75,7 @@
     <h2>Add a Comment</h2>
     <form method="post" class="mt-4 mb-4">
         {% csrf_token %}
+        {{ form.media }}
         {{ form|crispy }}
         <input type="submit" value="Comment" class="btn btn-primary mt-3">
     </form>

@@ -23,7 +23,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control my-2', 'placeholder': 'Email'}),
-            'body': forms.Textarea(attrs={'class': 'form-control my-2', 'placeholder': 'Comment'}),
+            'body': forms.Textarea(attrs={'class': 'form-control my-2 ', 'placeholder': 'Comment'}),
         }
 
 
@@ -42,9 +42,9 @@ class NewPostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'body', 'tags', 'status']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Title'}),
+            'title': forms.TextInput(attrs={'class': 'form-control mb-3 fs-5', 'placeholder': 'Title'}),
             'body': forms.Textarea(attrs={'class': 'form-control my-2', 'placeholder': 'Body'}),
-            'tags': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Tags'}),
-            'status': forms.Select(attrs={'class': 'form-select my-2'}),
+            'tags': forms.TextInput(attrs={'class': 'form-control my-3', 'placeholder': 'Tags'}),
+            'status': forms.Select(attrs={'class': 'form-select my-4 text-danger'}),
         }
 

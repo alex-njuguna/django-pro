@@ -3,9 +3,10 @@
 
 {% block content %}
     <div class="container d-flex flex-column align-items-center mt-2">
-        <h2 class="fst-italic my-5">Create</h2>
+        <h2 class="fst-italic my-5">Get Creative</h2>
         <form method="post">
             {% csrf_token %}
+            {{ form.media }}
             {{ form|crispy }}
             <input type="submit" value="Save" class="btn btn-primary my-3">
         </form>
