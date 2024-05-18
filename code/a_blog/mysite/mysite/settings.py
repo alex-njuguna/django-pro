@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # extensions
     'crispy_forms',
     'taggit',
+    'ckeditor',
 
     # local
     'blog.apps.BlogConfig',
