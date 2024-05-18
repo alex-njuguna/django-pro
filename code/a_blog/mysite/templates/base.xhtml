@@ -17,12 +17,25 @@
     {% endif %}
 </head>
 <body>
+    <div>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
     <div class="container-fluid d-flex flex-horizontal min-vh-100" style="width: 100%;">
         <div class="row w-100" style="width: 65%;">
             <div class="col-md-10">
                 <div class="container-fluid d-flex flex-column p-4 text-left mr-4">
                     <div id="'content">
                         {% block content %}
+                            
                         {%  endblock %}
                     </div>
                 </div>
