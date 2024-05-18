@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import RegisterUserForm, UserUpdateForm, ProfileUpdateForm, LoginUserForm
 
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         form = LoginUserForm(request.POST)
         if form.is_valid():
@@ -15,7 +15,7 @@ def login(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                login(request)
+                login(request, user)
                 return redirect('blog:post_list')
             else:
                 messages.warning(request, "Invalid details")
@@ -30,6 +30,10 @@ def login(request):
     
     return render(request, 'users/login.xhtml', context)
 
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('users:login')
 
 def register_user(request):
     if request.method == 'POST':
