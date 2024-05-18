@@ -6,8 +6,8 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(template_name='users/login.xhtml'), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('login/', views.login, name='login'),
+    path('logout/', LogoutView.as_view(next_page='users:login'), name='logout'),
     path('register/', views.register_user, name='register'),
 
     # profile
