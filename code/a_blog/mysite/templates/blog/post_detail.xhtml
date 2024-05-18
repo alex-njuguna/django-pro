@@ -4,9 +4,16 @@
 
 {% block content%}
     <h1 class="text-danger mb-3 text-capitalize">{{ post.title }}</h1>
+    {% if request.user == post.author %}
+        <div class="btn-group">
+            <a href="" class="btn btn-light"><i class="fa-solid fa-marker text-primary"></i> &nbsp; Update</a>
+            <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> &nbsp;Delete</a>
+        </div>
+    {% endif %}
     <hr>
-    <p class="text-primary fs-5">
-        Published {{ post.publish }} by {{ post.author}}
+    <p class="text-primary fs-6 text-capitalize">
+        <img src="{{ post.author.profile.profile_pic.url }}" alt="{{ post.author }}" style="height: 100px; width: 100px;" class="rounded-circle"> by {{ post.author}}:
+        {{ post.publish|date:"Y-m-d" }} 
     </p>
     <hr>
     {{ post.body|markdown }}
