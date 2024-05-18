@@ -1,10 +1,12 @@
 {% extends 'base.xhtml' %}
 {% load blog_tags %}
 {% block content %}
-    <h1 class="mb-4 fw-bold">Alex<span class="text-danger">Blog</span></h1>
     {% if tag %}
         <h2 class="alert alert-primary text-capitalize">Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
+    <h2 class="alert alert-success mb-4">
+        Posts by <span class="fst-italic text-primary">{{author}}</span>
+    </h2>
     {% for post in posts %}
     <div class="border-start shadow-sm p-3 my-3">
         
@@ -22,7 +24,7 @@
         </p>
         <p class="fs-6 fst-italic text-capitalize" style="color: gray;">
             <img class="border-0 rounded-circle" style="width: 50px; height: 50px;" src="{{ post.author.profile.profile_pic.url }}" alt="{{ post.author.username }}">
-            by <a style="color: brown;" href="{% url 'blog:user_content' post.author.id %}">{{ post.author }}</a> :
+            by {{ post.author }}:
             Published {{ post.publish|date:"Y-m-d" }} 
         </p>
         {{ post.body|markdown|truncatewords_html:30|linebreaks }}

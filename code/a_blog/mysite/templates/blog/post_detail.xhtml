@@ -12,7 +12,8 @@
     {% endif %}
     <hr>
     <p class="text-primary fs-6 text-capitalize">
-        <img src="{{ post.author.profile.profile_pic.url }}" alt="{{ post.author }}" style="height: 100px; width: 100px;" class="rounded-circle"> by {{ post.author}}:
+        <img src="{{ post.author.profile.profile_pic.url }}" alt="{{ post.author }}" style="height: 100px; width: 100px;" class="rounded-circle">
+        <a href="{% url 'blog:user_content' post.author.id %}" style="color: brown; font-style: italic;" >{{ post.author}}</a> - Published:
         {{ post.publish|date:"Y-m-d" }} 
     </p>
     <hr>

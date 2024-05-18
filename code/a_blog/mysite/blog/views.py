@@ -14,11 +14,6 @@ from .forms import EmailPostForm, CommentForm, SearchForm
 
 load_dotenv()
 
-# class PostListView(ListView):
-#     queryset = Post.published.all()
-#     context_object_name = 'posts'
-#     template_name = 'blog/post_list.xhtml'
-#     paginate_by = 3
 def post_list(request, tag_slug=None):
     post_list = Post.published.all()
     tag = None
@@ -120,3 +115,28 @@ def post_search(request):
             search_query = SearchQuery(query, config='english')
             results = Post.published.annotate(search=search_vector, rank=SearchRank(search_vector, search_query)).filter(search=search_query).order_by('-rank')
     return render(request, 'blog/search.xhtml', {'form': form, 'query': query, 'results': results})
+
+
+"""posts by a specific user"""
+def posts_by_user(request, user_id, tag_slug=None):
+    post_list = Post.published.filter(author__id=user_id)
+    author = post_list[0].author.username
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post_list = post_list.filter(tags__in=[tag])
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'author': author,
+        'posts': posts,
+        'tag': tag,
+    }
+    return render(request, 'blog/posts_by_user.xhtml', context)
