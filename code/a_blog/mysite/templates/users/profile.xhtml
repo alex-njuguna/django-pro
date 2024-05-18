@@ -1,0 +1,19 @@
+{% extends 'base.xhtml' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container d-flex flex-column align-items-center mt-5">
+        <h2 class="fst-italic my-5 text-capitalize">profile page</h2>
+        <hr>
+        <div>
+            <img class="ronded" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+            <input type="submit" value="Save" class="btn btn-success my-3">
+        </form>
+       <a href="{% url 'blog:post_list' %}" class="btn btn primary">Skip</a>
+    </div>
+{% endblock %}
