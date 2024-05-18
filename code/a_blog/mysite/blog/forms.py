@@ -1,4 +1,5 @@
 from django import forms
+from taggit.forms import TagField
 
 from .models import Post, Comment
 
@@ -16,3 +17,10 @@ class CommentForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='')
+
+class NewPostForm(forms.ModelForm):
+    tags = TagField()
+
+    class Meta:
+        model = Post
+        fields = ['title', 'body', 'tags', 'status']

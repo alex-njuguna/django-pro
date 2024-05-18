@@ -3,14 +3,14 @@
       <a class="navbar-brand" href="{% url 'blog:post_list' %}">
         <h5 class="fw-bold">Alex<span class="text-danger">Blog</span></h5>
       </a>
-      <a class="btn btn-outline-light" style="margin-left: 20%; margin-right: 20%;" href="{% url 'blog:post_search' %}">
+      <a class="btn btn-outline-light" style="margin-left: 20%; margin-right: 20%; width: 200px;" href="{% url 'blog:post_search' %}">
         <i class="fa-solid fa-magnifying-glass">
         </i> &nbsp; <span class=" fw-bold fst-italic"> Find</span>
     </a>
       <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse" id="navbarColor01" style="">
+      <div class="navbar-collapse collapse" id="navbarColor01">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link active" href="{% url 'blog:post_list' %}">Home

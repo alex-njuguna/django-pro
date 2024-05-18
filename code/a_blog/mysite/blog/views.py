@@ -8,9 +8,11 @@ from django.core.paginator import Paginator
 from django.db.models import Count
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils.text import slugify
 
 from .models import Post, Comment, Reaction
-from .forms import EmailPostForm, CommentForm, SearchForm
+from .forms import EmailPostForm, CommentForm, SearchForm, NewPostForm
 
 load_dotenv()
 
@@ -30,7 +32,6 @@ def post_list(request, tag_slug=None):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/post_list.xhtml', {'posts': posts, 'tag':tag})
 
-@login_required
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post,
      status=Post.Status.PUBLISHED,
@@ -140,3 +141,33 @@ def posts_by_user(request, user_id, tag_slug=None):
         'tag': tag,
     }
     return render(request, 'blog/posts_by_user.xhtml', context)
+
+@login_required
+def new_post(request):
+    if request.method == 'POST':
+        form = NewPostForm(request.POST)
+        if form.is_valid():
+            try:
+                author = request.user
+                slug = slugify(form.cleaned_data['title'])
+                post = form.save(commit=False)
+                post.author = author
+                post.slug = slug
+                post.save()
+
+                tags = form.cleaned_data['tags']
+                for tag in tags:
+                    tag_obj, _ = Tag.objects.get_or_create(name=tag)
+                    post.tags.add(tag_obj)
+
+                messages.success(request, "post saved")
+                return redirect('blog:post_list')
+            except Exception as e:
+                print(f"An error has occured: {e}")
+    else:
+        form = NewPostForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'blog/new_post.xhtml', context)

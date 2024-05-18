@@ -13,4 +13,7 @@ urlpatterns = [
     path('<int:post_id>/share/', views.post_share, name='post_share'),
     path('search/', views.post_search, name='post_search'),
     path('posts-by-user/<int:user_id>/', views.posts_by_user, name='user_content'),
+
+    # posts crud
+    path('new/', views.new_post, name='new_post'),
 ]
