@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'blog:post_list' %}">
+        <h5 class="fw-bold">Alex<span class="text-danger">Blog</span></h5>
+      </a>
+      <a class="btn btn-outline-light" style="margin-left: 20%; margin-right: 20%;" href="{% url 'blog:post_search' %}">
+        <i class="fa-solid fa-magnifying-glass">
+        </i>
+    </a>
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbarColor01" style="">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'blog:post_list' %}">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}">Log Out</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:login' %}">Sign In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:register' %}">Sign Up</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
