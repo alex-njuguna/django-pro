@@ -1,0 +1,20 @@
+{% extends 'base.xhtml' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container d-flex flex-column align-items-center mt-2">
+        <h2 class="fst-italic my-5">Update</h2>
+        <div>
+            <p class="alert alert-danger">Ensure to delete and rewrite all tags as comma separated values for successful update!!</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form|crispy }}
+            <input type="submit" value="Update" class="btn btn-primary my-3">
+        </form>
+        <a href="{% url 'blog:post_list'%}" class="btn btn-outline-dark mt-4">
+            <i class="fa-solid fa-rotate-left"></i> &nbsp; back
+        </a>
+    </div>
+{% endblock %}

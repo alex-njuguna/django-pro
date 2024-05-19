@@ -28,7 +28,7 @@
                     <ul class="list-group">
                         {% for post in posts %}
                         <li class="list-group-item fs-4">
-                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="">
+                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="{% url 'blog:post_update' post.id %}">
                                 {{ post.title }} - {{ post.created}} 
                             </a>
                         </li>

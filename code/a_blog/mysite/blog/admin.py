@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Post, Comment, Reaction
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'author', 'publish', 'created', 'updated', 'status']
+    list_display = ['id','title', 'slug', 'author', 'publish', 'created', 'updated', 'status']
     list_display_links = ['title', 'author']
     list_filter = ['status', 'created', 'publish']
     prepopulated_fields = {'slug': ('title',)}

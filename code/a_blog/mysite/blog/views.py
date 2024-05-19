@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.core.paginator import Paginator
@@ -10,9 +10,11 @@ from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.text import slugify
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post, Comment, Reaction
-from .forms import EmailPostForm, CommentForm, SearchForm, NewPostForm
+from .forms import EmailPostForm, CommentForm, SearchForm, NewPostForm, PostUpdateForm
 
 load_dotenv()
 
@@ -171,3 +173,46 @@ def new_post(request):
         'form': form
     }
     return render(request, 'blog/new_post.xhtml', context)
+
+# class PostUpdateView(LoginRequiredMixin, UpdateView):
+#     model = Post
+#     fields = ['title', 'body', 'tags', 'status']
+#     template_name = 'blog/update_post.xhtml'
+#     success_url = reverse_lazy('blog:post_list')
+
+@login_required
+def post_update(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if post.author == request.user:
+        if request.method == 'POST':
+            form = PostUpdateForm(request.POST, instance=post)
+            if form.is_valid():
+                try:
+                    author = request.user
+                    slug = slugify(form.cleaned_data['title'])
+                    post = form.save(commit=False)
+                    post.author = author
+                    post.slug = slug
+                    post.save()
+
+                    post.tags.clear()
+                    tags = form.cleaned_data['tags']
+                    for tag in tags:
+                        tag_obj, _ = Tag.objects.get_or_create(name=tag)
+                        post.tags.add(tag_obj)
+
+                    messages.success(request, "post updated")
+                    return redirect('blog:post_list')
+                except Exception as e:
+                    print(f"An error has occured: {e}")
+        else:
+            form = PostUpdateForm(instance=post)
+    else:
+        return redirect('blog:post_list')
+
+    context = {
+        'form': form,
+        'title': 'update'
+    }
+
+    return render(request, 'blog//update_post.xhtml', context)

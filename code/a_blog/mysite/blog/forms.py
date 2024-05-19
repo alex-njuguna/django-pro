@@ -48,3 +48,21 @@ class NewPostForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-select my-4 text-danger'}),
         }
 
+class PostUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].label = ''
+        self.fields['body'].label = ''
+        self.fields['tags'].label = ''
+        self.fields['status'].label = ''
+
+    class Meta:
+        model = Post
+        fields = ['title', 'body', 'tags', 'status']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control mb-3 fs-5', 'placeholder': 'Title'}),
+            'body': forms.Textarea(attrs={'class': 'form-control my-2', 'placeholder': 'Body'}),
+            'tags': forms.TextInput(attrs={'class': 'form-control my-3', 'placeholder': 'Tags'}),
+            'status': forms.Select(attrs={'class': 'form-select my-4 text-danger'}),
+        }
+

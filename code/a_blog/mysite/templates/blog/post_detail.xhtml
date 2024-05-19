@@ -6,7 +6,7 @@
     <h1 class="text-danger mb-3 text-capitalize">{{ post.title }}</h1>
     {% if request.user == post.author %}
         <div class="btn-group">
-            <a href="" class="btn btn-light"><i class="fa-solid fa-marker text-primary"></i> &nbsp; Update</a>
+            <a href="{% url 'blog:post_update' post.id %}" class="btn btn-light"><i class="fa-solid fa-marker text-primary"></i> &nbsp; Update</a>
             <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> &nbsp;Delete</a>
         </div>
     {% endif %}
