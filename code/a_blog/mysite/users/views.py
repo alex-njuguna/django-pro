@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 
 from .forms import RegisterUserForm, UserUpdateForm, ProfileUpdateForm, LoginUserForm
-
+from blog.models import Post
 
 def user_login(request):
     if request.method == 'POST':
@@ -66,9 +66,14 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
+    # get all posts by the current user that are drafts
+    posts = Post.objects.filter(author=request.user).filter(status=Post.Status.DRAFT)
+
+
     context = {
         'user_form': u_form,
         'profile_form': p_form,
+        'posts': posts,
     }
 
     return render(request, 'users/profile.xhtml', context)
