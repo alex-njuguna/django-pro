@@ -16,5 +16,6 @@ urlpatterns = [
 
     # posts crud
     path('new/', views.new_post, name='new_post'),
-    path('<int:post_id>/update/', views.post_update, name='post_update')
+    path('<int:post_id>/update/', views.post_update, name='post_update'),
+    path('<int:post_id>/delete', views.delete_post, name='delete_post')
 ]

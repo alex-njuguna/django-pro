@@ -216,3 +216,11 @@ def post_update(request, post_id):
     }
 
     return render(request, 'blog//update_post.xhtml', context)
+
+@login_required()
+def delete_post(request, post_id):
+    post = Post.published.get(id=post_id)
+    if post.author == request.user:
+        post.delete()
+        return redirect('blog:post_list')
+        

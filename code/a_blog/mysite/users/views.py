@@ -67,13 +67,15 @@ def profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     # get all posts by the current user that are drafts
-    posts = Post.objects.filter(author=request.user).filter(status=Post.Status.DRAFT)
+    draft_posts = Post.objects.filter(author=request.user).filter(status=Post.Status.DRAFT)
+    published_posts = Post.published.filter(author=request.user)
 
 
     context = {
         'user_form': u_form,
         'profile_form': p_form,
-        'posts': posts,
+        'draft_posts': draft_posts,
+        'published_posts': published_posts,
     }
 
     return render(request, 'users/profile.xhtml', context)

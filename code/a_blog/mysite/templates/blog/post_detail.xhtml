@@ -7,7 +7,7 @@
     {% if request.user == post.author %}
         <div class="btn-group">
             <a href="{% url 'blog:post_update' post.id %}" class="btn btn-light"><i class="fa-solid fa-marker text-primary"></i> &nbsp; Update</a>
-            <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> &nbsp;Delete</a>
+            <a href="{% url 'blog:delete_post' post.id %}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> &nbsp;Delete</a>
         </div>
     {% endif %}
     <hr>

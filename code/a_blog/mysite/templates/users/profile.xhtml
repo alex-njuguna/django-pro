@@ -3,14 +3,21 @@
 
 {% block content %}
     <h2 class="fst-italic my-3 text-capitalize">profile page</h2>
+    <div class="container d-flex flex-row">
+        <div class="container-sm d-flex flex-column">
+            <img class="rounded-circle" style="width: 150px; height: 150px;" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
+        </div>
+        <div class="container d-flex flex-column pt-5">
+            <p><span class="fst-italic">Username: </span>{{ user.username }}</p>
+            <p><span class="fst-italic">email: </span>{{ user.email }}</p>
+        </div>
+    </div>
     <div class="container-fluid d-flex flex-column mt-5">
         <hr>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <div class="container-fluid border-2">
-                    <div class="mb-3">
-                        <img class="rounded-circle" style="width: 150px; height: 150px;" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
-                    </div>
+                    
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ user_form|crispy }}
@@ -19,16 +26,38 @@
                         {{ profile_form|crispy }}
                         <input type="submit" value="Save" class="btn btn-success my-3">
                     </form>
-                   <a href="{% url 'blog:post_list' %}" class="btn btn-outline-dark text-center">Skip</a>
+                   <a href="{% url 'blog:post_list' %}" class="btn btn-outline-dark text-center">
+                    <i class="fa-solid fa-forward"></i>&nbsp;Skip</a>
                 </div>
             </div>
             <div class="col-md-6 p-4">
-                <h2 class="fst-italic text-danger">Drafts(Post not published)</h2>
-                <div class="container mt-3 p-2" style="background-color: bisque;">
+                <h2 class="fst-italic text-primary">Drafts</h2>
+                <div class="container mt-3 p-2">
+                    {% if draft_posts %}
+                        <ul class="list-group">
+                            {% for post in draft_posts %}
+                            <li class="list-group-item fs-6 border-left shadow my-1">
+                                <a style="color: rgb(71, 68, 68); margin-right: 20%;" class="text-decoration-none text-capitalize" href="{% url 'blog:post_update' post.id %}">
+                                    {{ post.title }} - {{ post.created|date:"Y/m/d"}} 
+                                </a>
+                                <a href="{% url 'blog:delete_post' post.id %}">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="alert alert-warning">No posts saved in draft</p>
+                    {% endif %}
+                  
+                </div>
+                <hr>
+                <h2 class="fst-italic text-primary">Published</h2>
+                <div class="container mt-3 p-2">
                     <ul class="list-group">
-                        {% for post in posts %}
-                        <li class="list-group-item fs-4">
-                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="{% url 'blog:post_update' post.id %}">
+                        {% for post in published_posts %}
+                        <li class="list-group-item fs-6 border-left shadow my-1">
+                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="{{ post.get_absolute_url }}">
                                 {{ post.title }} - {{ post.created}} 
                             </a>
                         </li>
