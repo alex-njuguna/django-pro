@@ -9,7 +9,7 @@
             <div class="col-md-6 mb-3">
                 <div class="container-fluid border-2">
                     <div class="mb-3">
-                        <img class="rounded" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
+                        <img class="rounded-circle" style="width: 150px; height: 150px;" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
                     </div>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -22,16 +22,19 @@
                    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-dark text-center">Skip</a>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 p-4">
                 <h2 class="fst-italic text-danger">Drafts(Post not published)</h2>
-                <div class="container p-4" style="background-color: bisque;">
-                    {% for post in posts %}
-                        <h4>
-                            <a href="">
-                                {{ post.title }}
+                <div class="container mt-3 p-2" style="background-color: bisque;">
+                    <ul class="list-group">
+                        {% for post in posts %}
+                        <li class="list-group-item fs-4">
+                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="">
+                                {{ post.title }} - {{ post.created}} 
                             </a>
-                        </h4>
+                        </li>
                     {% endfor %}
+                    </ul>
+                  
                 </div>
             </div>
         </div>

@@ -20,10 +20,10 @@ class RegisterUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control my-2', 'placeholder': 'Email'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control my-2 ', 'placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control my-2 ', 'placeholder': 'Confirm Password'}),
+            'username': forms.TextInput(attrs={'class': 'form-control my-3', 'placeholder': 'Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control my-3', 'placeholder': 'Email'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control my-3 ', 'placeholder': 'Password'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control my-3 ', 'placeholder': 'Confirm Password'}),
         }
 
 class UserUpdateForm(forms.ModelForm):
@@ -41,8 +41,4 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_pic', 'website', 'bio']
-        # widgets = {
-        #     'profile_pic': forms.FileInput(attrs={'class': 'form-control my-2'}),
-        #     'website': forms.TextInput(attrs={'class': 'form-control my-2'}),
-        #     'bio': forms.TextArea(attrs={'class': 'form-control my-2'}),
-        # }
+       
