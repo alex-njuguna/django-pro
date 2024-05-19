@@ -12,4 +12,7 @@ urlpatterns = [
 
     # profile
     path('profile/', views.profile, name='profile'),
+
+    # delete user
+    path('<int:user_id>/delete/', views.delete_user, name='delete_user'),
 ]

@@ -70,7 +70,6 @@ def profile(request):
     draft_posts = Post.objects.filter(author=request.user).filter(status=Post.Status.DRAFT)
     published_posts = Post.published.filter(author=request.user)
 
-
     context = {
         'user_form': u_form,
         'profile_form': p_form,
@@ -80,3 +79,10 @@ def profile(request):
 
     return render(request, 'users/profile.xhtml', context)
 
+@login_required
+def delete_user(request, user_id):
+    current_user = User.objects.get(id=user_id)
+    if current_user == request.user:
+        current_user.delete()
+        messages.info(request, "Account deleted!")
+        return redirect('blog:post_list')

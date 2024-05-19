@@ -8,8 +8,8 @@
             <img class="rounded-circle" style="width: 150px; height: 150px;" src="{{ user.profile.profile_pic.url }}" alt="{{ user.username }} profile picture">
         </div>
         <div class="container d-flex flex-column pt-5">
-            <p><span class="fst-italic">Username: </span>{{ user.username }}</p>
-            <p><span class="fst-italic">email: </span>{{ user.email }}</p>
+            <p>username: <span class="fst-italic" style="color: brown; font-weight: bold;">{{user.username}} </span></p>
+            <p>email: <span class="fst-italic" style="color: brown; font-weight: bold;">{{user.email}} </span></p>
         </div>
     </div>
     <div class="container-fluid d-flex flex-column mt-5">
@@ -54,19 +54,57 @@
                 <hr>
                 <h2 class="fst-italic text-primary">Published</h2>
                 <div class="container mt-3 p-2">
-                    <ul class="list-group">
-                        {% for post in published_posts %}
-                        <li class="list-group-item fs-6 border-left shadow my-1">
-                            <a style="color: brown;" class="text-decoration-none text-capitalize" href="{{ post.get_absolute_url }}">
-                                {{ post.title }} - {{ post.created}} 
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
+                    {% if published_posts %}
+                        <ul class="list-group">
+                            {% for post in published_posts %}
+                                <li class="list-group-item fs-6 border-left shadow my-1">
+                                    <a style="color: brown;" class="text-decoration-none text-capitalize" href="{{ post.get_absolute_url }}">
+                                        {{ post.title }} - {{ post.created}} 
+                                    </a>
+                                </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="alert alert-danger">No posts published yet</p>
+                    {% endif %}
                   
                 </div>
             </div>
         </div>
       
+    </div>
+    <hr>
+    <div class="container text-center py-3 my-2">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete Account
+        </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Delete account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                     <h3 class="alert alert-danger">This action is irreversible</h3>
+                     <p  class="alert alert-warning">Once deleted the account is cannot be recovered!</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+                    <a href="{% url 'users:delete_user' request.user.id %}" class="btn btn-danger">
+                        Proceed
+                    </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
+
+        
     </div>
 {% endblock %}
