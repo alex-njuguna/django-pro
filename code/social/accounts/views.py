@@ -23,7 +23,8 @@ def user_login(request):
     else:
         form = LoginForm()
     context = {
-        'form': form
+        'form': form,
+        'title': 'login',
     }
 
     return render(request, 'accounts/login.xhtml', context)
