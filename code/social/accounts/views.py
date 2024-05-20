@@ -35,7 +35,7 @@ def user_login(request):
 def user_logout(request):
     # logout a user
     logout(request)
-    return redirect('login')
+    return redirect('accounts:login')
 
 @login_required
 def dashboard(request):
