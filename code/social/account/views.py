@@ -17,7 +17,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Logged in')
+                    return redirect('dashboard')
                 else:
                     return HttpResponse('user is disabled')
             else:
@@ -29,13 +29,13 @@ def user_login(request):
         'title': 'login',
     }
 
-    return render(request, 'accounts/login.xhtml', context)
+    return render(request, 'account/login.xhtml', context)
 
 @login_required
 def user_logout(request):
     # logout a user
     logout(request)
-    return redirect('accounts:login')
+    return redirect('login')
 
 @login_required
 def dashboard(request):
@@ -43,4 +43,4 @@ def dashboard(request):
     context = {
         'title': 'dashboard'
     }
-    return render(request, 'accounts/dashboard.xhtml', context)
+    return render(request, 'account/dashboard.xhtml', context)
