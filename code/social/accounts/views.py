@@ -8,6 +8,7 @@ from .forms import LoginForm
 
 
 def user_login(request):
+    # authenticate and login a user
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -32,5 +33,14 @@ def user_login(request):
 
 @login_required
 def user_logout(request):
+    # logout a user
     logout(request)
     return redirect('login')
+
+@login_required
+def dashboard(request):
+    # user to access dashboard
+    context = {
+        'title': 'dashboard'
+    }
+    return render(request, 'accounts/dashboard.xhtml', context)
