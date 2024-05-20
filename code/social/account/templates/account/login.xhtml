@@ -6,10 +6,16 @@
     <h1>Login</h1>
     <hr>
     <p class="mb-4">Use the following form to login:</p>
+    {% if form.errors %}
+        <p>Incorrect details</p>
+    {% endif %}
     <form action="" method="post">
         {% csrf_token %}
         {{ form|crispy }}
         <input class="btn btn-success mt-3" type="submit" value="Login">
     </form>
+    <p class="mt-4">
+        <a class="text-decoration-none" href="{% url 'password_reset' %}">Forgot your password?</a>
+    </p>
 </div>
 {% endblock %}
