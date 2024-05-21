@@ -18,13 +18,20 @@
                 </li>
             {% endif %}
         </ul>
-        <span class="navbar-text">
+        <ul class="navbar-nav m-2 mb-lg-0 ms-auto">
             {% if request.user.is_authenticated %}
-                <a class="text-decoration-none" href="{% url 'logout' %}">Logout</a>
+                <li class="nav-item">
+                    <a class="text-decoration-none text-dark" href="{% url 'logout' %}">Logout</a>
+                </li>
             {% else %}
-                <a class="text-decoration-none" href="{% url 'login' %}">Login</a>
+                <li class="nav-item mx-2">
+                    <a class="text-decoration-none text-dark" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="text-decoration-none text-dark" href="{% url 'register' %}">Signup</a>
+                </li>
             {% endif %}
-        </span>
+        </ul>
       </div>
     </div>
   </nav>
