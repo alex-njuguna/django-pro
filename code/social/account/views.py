@@ -18,9 +18,12 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    messages.success(request, f"{cd['username']} logged in.")
                     return redirect('dashboard')
                 else:
-                    return HttpResponse('user is disabled')
+                    messages.error(request, f"{cd['username']} is disabled")
+            else:
+                messages.error(request, f"make sure all details are entered correctly")
     else:
         form = LoginForm()
     context = {

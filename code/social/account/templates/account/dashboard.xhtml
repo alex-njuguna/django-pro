@@ -1,17 +1,20 @@
 {% extends 'base.xhtml' %}
 {% block content %}
     <div class="container-fluid p-2">
-        <div class="container d-flex flex-row">
-            <div class="container d-flex flex-column align-items-start">
-                <h1 class="text-start">Dashboard</h1>
-                <p class="text-start">Welcome to your dashboard</p>
-            </div>
+        <h1 class="">Dashboard</h1>
+        <p class="">Welcome to your dashboard. You can  or.</p>
 
-            <div class="container d-flex flex-column align-items-end">
-                <h3 class="text-danger text-end fst-italic">{{ request.user.username }}</h3>
-                <h3 class="text-danger text-end fst-italic">{{ request.user.email }}</h3>
-
-            </div>
-        </div>
+       <div class="container w-50 text-center">
+        <ul class="list-group text-capitalize">
+            <li class="list-group-item my-1 p-2 text-success shadow">
+                <a href="{% url 'edit' %}" class=" text-decoration-none text-danger text-capitalize">update your profile
+                </a>
+            </li>
+            <li class="list-group-item my-1 p-2 text-success shadow">
+                <a class="text-decoration-none text-danger" href="{% url 'password_change' %}">change your password
+                </a>
+            </li>
+        </ul>
+       </div>
     </div>
 {% endblock %}
