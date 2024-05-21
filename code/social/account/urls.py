@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-
+    path('register/', views.register, name='register'),
+    
     # change password
     path('password-change/', auth_views.PasswordChangeView.as_view(template_name='registration/password_changeform.xhtml'), name='password_change'),
     path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.xhtml'), name='password_change_done'),

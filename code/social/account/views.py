@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm
+from .forms import LoginForm, UserRegisterForm
 
 
 def user_login(request):
@@ -20,8 +20,6 @@ def user_login(request):
                     return redirect('dashboard')
                 else:
                     return HttpResponse('user is disabled')
-            else:
-                return HttpResponse('invalid login details')
     else:
         form = LoginForm()
     context = {
@@ -44,3 +42,16 @@ def dashboard(request):
         'title': 'dashboard'
     }
     return render(request, 'account/dashboard.xhtml', context)
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            form.save()
+            messages.success(request, f"Account for username '{username}' created successfully")
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+    
+    return render(request, 'account/register.xhtml', {'form': form})
