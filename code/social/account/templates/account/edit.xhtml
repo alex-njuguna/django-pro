@@ -1,20 +1,44 @@
 {% extends 'base.xhtml' %}
 {% load crispy_forms_tags %}
 
-{% block content%}
-    <div class="conainer w-75 p-2">
-        <h1 class="fst-italic mb-3">
-            Update your account
-        </h1>
-        <hr>
-            <img style="width: 150px; height: 150px;" class="rounded-circle my-4" src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }} photo">
-        <hr>
-        <form class="form-group mt-3" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ user_form|crispy }}
-            <hr class="my-4">
-            {{ profile_form|crispy }}
-            <input type="submit" value="Save Changes" class="btn btn-outline-primary mt-4">
-        </form>
+{% block content %}
+<div class="container w-75 mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Update Your Account</h1>
+                    <hr>
+                    <div class="text-center mb-4">
+                        <img style="width: 128px; height: 150px;" class="rounded border-0" src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }} photo">
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ user_form.first_name|as_crispy_field }}
+                        </div>
+                        <div class="mb-3">
+                            {{ user_form.last_name|as_crispy_field }}
+                        </div>
+                        <div class="mb-3">
+                            {{ user_form.email|as_crispy_field }}
+                        </div>
+                        <hr class="my-4">
+                        <div class="mb-3">
+                            {{ profile_form.date_of_birth|as_crispy_field }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ profile_form.photo.id_for_label }}">Profile Photo</label>
+                            {{ profile_form.photo|as_crispy_field }}
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a class="btn ml-3 btn-outline-dark" href="{% url 'dashboard' %}">back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
