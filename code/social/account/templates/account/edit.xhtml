@@ -1,0 +1,20 @@
+{% extends 'base.xhtml' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+    <div class="conainer w-75 p-2">
+        <h1 class="fst-italic mb-3">
+            Update your account
+        </h1>
+        <hr>
+            <img style="width: 150px; height: 150px;" class="rounded-circle my-4" src="{{ request.user.profile.photo.url }}" alt="{{ request.user.username }} photo">
+        <hr>
+        <form class="form-group mt-3" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            <hr class="my-4">
+            {{ profile_form|crispy }}
+            <input type="submit" value="Save Changes" class="btn btn-outline-primary mt-4">
+        </form>
+    </div>
+{% endblock %}

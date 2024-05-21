@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm, UserRegisterForm
+from .forms import LoginForm, UserRegisterForm, UserEditForm, ProfileEditForm
+from .models import Profile
 
 
 def user_login(request):
@@ -48,10 +49,43 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
-            form.save()
+            new_user = form.save(commit=False)
+            new_user.save()
+            # create the user profile
+            Profile.objects.create(user=new_user)
             messages.success(request, f"Account for username '{username}' created successfully")
             return redirect('login')
     else:
         form = UserRegisterForm()
+    context = {
+        'form': form,
+        'title': 'register',
+    }
     
-    return render(request, 'account/register.xhtml', {'form': form})
+    return render(request, 'account/register.xhtml', context)
+
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Profile updated successfully')
+        else:
+            messages.error(request, 'Data not correctly loaded')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'title': 'profile update'
+    }
+
+    return render(request, 'account/edit.xhtml', context)
+    
+
+    
