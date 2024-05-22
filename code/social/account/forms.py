@@ -33,6 +33,7 @@ class UserRegisterForm(UserCreationForm):
                 'class': 'form-control, my-3'
             }),
         }
+        
 
 class UserEditForm(forms.ModelForm):
     class Meta:

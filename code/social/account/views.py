@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import LoginForm, UserRegisterForm, UserEditForm, ProfileEditForm
 from .models import Profile
@@ -23,7 +24,7 @@ def user_login(request):
                 else:
                     messages.error(request, f"{cd['username']} is disabled")
             else:
-                messages.error(request, f"make sure all details are entered correctly")
+                messages.warning(request, f"make sure all details are entered correctly")
     else:
         form = LoginForm()
     context = {
@@ -51,6 +52,14 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                test_email = User.objects.get(email=email)
+                if test_email:
+                    messages.warning(request, 'A user with that email already exists')
+                    return render(request, 'account/register.xhtml', {'form': form})
+            except User.DoesNotExist:
+                pass
             username = form.cleaned_data['username']
             new_user = form.save(commit=False)
             new_user.save()
@@ -74,6 +83,14 @@ def edit(request):
         profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
         
         if user_form.is_valid() and profile_form.is_valid():
+            email = user_form.cleaned_data['email']
+            try:
+                test_email = User.objects.get(email=email)
+                if test_email:
+                    messages.warning(request, 'A user with that email already exists')
+                    return render(request, 'account/edit.xhtml', {'user_form': user_form, 'profile_form': profile_form})
+            except User.DoesNotExist:
+                pass
             user_form.save()
             profile_form.save()
             messages.success(request, 'Profile updated successfully')
