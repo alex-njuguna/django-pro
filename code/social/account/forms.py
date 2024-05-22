@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='username')
+    username = forms.CharField(label='username/email')
     password = forms.CharField(widget=forms.PasswordInput)
 
 class UserRegisterForm(UserCreationForm):
