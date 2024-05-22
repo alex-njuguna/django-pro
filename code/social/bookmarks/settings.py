@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-_0(z2tfkyrr5b6hzqewi=8za(wj@41&gxm_&=$tx@$n$gk+kzd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'mysite.com', '127.0.0.1']
 
 
 # Application definition
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     # extensions
     'crispy_forms',
+    'social_django',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
