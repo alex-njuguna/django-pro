@@ -8,6 +8,9 @@ urlpatterns = [
 
     # accounts
     path('account/', include('account.urls')),
+
+    # images
+    path('images/', include('images.urls')),
 ]
 
 if settings.DEBUG:
