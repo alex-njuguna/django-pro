@@ -30,7 +30,10 @@ INSTALLED_APPS = [
 
     # extensions
     'crispy_forms',
-    'social_django',
+    'django_extensions',
+
+    # local
+    'images.apps.ImagesConfig',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
