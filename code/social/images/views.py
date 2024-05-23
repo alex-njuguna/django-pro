@@ -24,6 +24,6 @@ def image_create(request):
         'title': 'bookmark an image',
     }
 
-    return render(request, 'images/image/create.xhtml')
+    return render(request, 'images/image/create.xhtml', context)
 
 
