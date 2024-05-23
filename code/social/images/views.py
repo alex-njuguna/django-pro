@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contib import messages
+from django.contrib import messages
 
 from .forms import ImageCreateForm
 from .models import Image
@@ -21,7 +21,7 @@ def image_create(request):
         form =ImageCreateForm()
     context = {
         'form': form,
-        'title': 'upload image',
+        'title': 'bookmark an image',
     }
 
     return render(request, 'images/image/create.xhtml')

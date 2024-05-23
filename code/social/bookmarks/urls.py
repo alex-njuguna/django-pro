@@ -10,7 +10,7 @@ urlpatterns = [
     path('account/', include('account.urls')),
 
     # images
-    path('images/', include('images.urls')),
+    path('images/', include('images.urls', namespace='images')),
 ]
 
 if settings.DEBUG:
